@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แลนด์แสนรัก รีสอร์ท บางไทร | ที่พักสงบเงียบ เป็นกันเอง</title>
+  <meta name="description" content="แลนด์แสนรัก รีสอร์ท บางไทร ที่พักบรรยากาศสงบเงียบ เป็นกันเอง ห้องพักเริ่มต้น 650 บาท/คืน และแบบพักชั่วคราว 3 ชั่วโมง 400 บาท" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&family=Sarabun:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== ตั้งค่าสี / ตัวแปร (แก้ตรงนี้ที่เดียว) ===== */
+    :root {
+      --green-dark: #2f4a3a;
+      --green: #4f7a5f;
+      --green-light: #e8efe9;
+      --sand: #f7f3ec;
+      --wood: #b0855a;
+      --text: #2b2b2b;
+      --muted: #6b6b6b;
+      --white: #ffffff;
+      --fb: #1877f2;
+      --radius: 14px;
+      --shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Sarabun", system-ui, sans-serif;
+      color: var(--text);
+      background: var(--sand);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+    h1, h2, h3, .btn, nav a { font-family: "Prompt", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(100% - 40px, var(--max)); margin-inline: auto; }
+    section { padding: 80px 0; }
+    .section-title { text-align: center; margin-bottom: 48px; }
+    .section-title h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--green-dark); font-weight: 600; }
+    .section-title p { color: var(--muted); margin-top: 6px; }
+
+    /* ===== ปุ่ม ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 26px; border-radius: 999px; font-weight: 500; font-size: 1rem;
+      border: 2px solid transparent; cursor: pointer; transition: all .2s ease;
+    }
+    .btn-primary { background: var(--green); color: var(--white); }
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-outline { border-color: var(--white); color: var(--white); }
+    .btn-outline:hover { background: var(--white); color: var(--green-dark); }
+    .btn-fb { background: var(--fb); color: var(--white); }
+    .btn-fb:hover { filter: brightness(.92); }
+    .btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+    /* ===== Header / เมนู ===== */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(247, 243, 236, .95); backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { font-family: "Prompt", sans-serif; font-weight: 600; font-size: 1.2rem; color: var(--green-dark); }
+    .logo span { color: var(--wood); }
+    nav ul { display: flex; gap: 28px; list-style: none; }
+    nav a { font-size: .95rem; color: var(--text); }
+    nav a:hover { color: var(--green); }
+    .menu-toggle { display: none; background: none; border: 0; font-size: 1.6rem; cursor: pointer; color: var(--green-dark); }
+
+    /* ===== Hero ===== */
+    .hero {
+      min-height: 88vh; display: grid; place-items: center; text-align: center;
+      color: var(--white); padding: 120px 0;
+      /* TODO: เปลี่ยนเป็นรูปจริงของรีสอร์ท เช่น url('images/hero.jpg') */
+      background:
+        linear-gradient(rgba(30, 48, 38, .55), rgba(30, 48, 38, .65)),
+        linear-gradient(135deg, #6f9a7d, #3e5f4b 60%, #a88660);
+      background-size: cover; background-position: center;
+    }
+    .hero small { letter-spacing: 3px; font-size: .85rem; opacity: .9; }
+    .hero h1 { font-size: clamp(2rem, 5.5vw, 3.6rem); font-weight: 600; margin: 10px 0 14px; line-height: 1.3; }
+    .hero p { font-size: 1.15rem; max-width: 560px; margin: 0 auto 32px; opacity: .95; }
+    .hero .actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+
+    /* ===== จุดเด่น ===== */
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .feature {
+      background: var(--white); border-radius: var(--radius); padding: 30px 24px;
+      text-align: center; box-shadow: var(--shadow);
+    }
+    .feature .icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .feature h3 { color: var(--green-dark); font-weight: 500; margin-bottom: 4px; }
+    .feature p { color: var(--muted); font-size: .95rem; }
+
+    /* ===== สิ่งอำนวยความสะดวก ===== */
+    #amenities { padding-top: 0; }
+    .amenities {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+      background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 32px 24px;
+    }
+    .amenity { text-align: center; padding: 8px; }
+    .amenity .icon {
+      width: 64px; height: 64px; margin: 0 auto 12px; border-radius: 50%;
+      background: var(--green-light); display: grid; place-items: center; font-size: 1.8rem;
+    }
+    .amenity h3 { font-size: 1.05rem; font-weight: 500; color: var(--green-dark); }
+    .amenity p { font-size: .88rem; color: var(--muted); line-height: 1.5; margin-top: 4px; }
+    @media (max-width: 900px) { .amenities { grid-template-columns: repeat(3, 1fr); row-gap: 28px; } }
+    @media (max-width: 520px) { .amenities { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ===== ห้องพัก ===== */
+    #rooms { background: var(--green-light); }
+    .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 28px; }
+    .room {
+      background: var(--white); border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow); display: flex; flex-direction: column;
+      transition: transform .2s ease;
+    }
+    .room:hover { transform: translateY(-4px); }
+    .room-img {
+      aspect-ratio: 4 / 3; display: grid; place-items: center;
+      color: rgba(255,255,255,.85); font-family: "Prompt", sans-serif;
+      /* TODO: ใส่รูปห้องจริงแทน placeholder */
+      background: linear-gradient(135deg, #8fb39b, #4f7a5f);
+      position: relative;
+    }
+    .room-img img { width: 100%; height: 100%; object-fit: cover; }
+    .room-tag {
+      position: absolute; top: 14px; left: 14px; background: var(--wood); color: var(--white);
+      font-size: .8rem; padding: 4px 12px; border-radius: 999px; font-family: "Prompt", sans-serif;
+    }
+    .room-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+    .room-body h3 { font-size: 1.3rem; color: var(--green-dark); font-weight: 500; }
+    .price { margin: 6px 0 14px; }
+    .price strong { font-family: "Prompt", sans-serif; font-size: 2rem; color: var(--green); }
+    .price span { color: var(--muted); }
+    .room-body ul { list-style: none; color: var(--muted); font-size: .95rem; margin-bottom: 22px; }
+    .room-body li::before { content: "✓ "; color: var(--green); font-weight: bold; }
+    .room-body .btn { margin-top: auto; width: 100%; }
+    .note { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 28px; }
+
+    /* ===== แผนที่ / ติดต่อ ===== */
+    .contact { display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px; align-items: stretch; }
+    .contact-info {
+      background: var(--white); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .contact-info h3 { color: var(--green-dark); font-weight: 500; font-size: 1.3rem; }
+    .contact-info .row { display: flex; gap: 12px; }
+    .contact-info .row b { display: block; font-family: "Prompt", sans-serif; font-weight: 500; }
+    .contact-info .row span { color: var(--muted); font-size: .95rem; }
+    .contact-info .btns { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
+    .map {
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); min-height: 380px;
+    }
+    .map iframe { width: 100%; height: 100%; min-height: 380px; border: 0; display: block; }
+
+    /* ===== Footer ===== */
+    footer { background: var(--green-dark); color: rgba(255,255,255,.8); text-align: center; padding: 32px 0; font-size: .9rem; }
+    footer a { color: var(--white); text-decoration: underline; }
+
+    /* ===== ปุ่มลอย Facebook ===== */
+    .float-fb {
+      position: fixed; right: 20px; bottom: 20px; z-index: 60;
+      width: 58px; height: 58px; border-radius: 50%; background: var(--fb);
+      display: grid; place-items: center; box-shadow: 0 6px 18px rgba(24,119,242,.4);
+      transition: transform .2s ease;
+    }
+    .float-fb:hover { transform: scale(1.08); }
+    .float-fb svg { width: 28px; height: 28px; fill: #fff; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 820px) {
+      .menu-toggle { display: block; }
+      nav ul {
+        display: none; position: absolute; top: 68px; left: 0; right: 0;
+        flex-direction: column; gap: 0; background: var(--sand);
+        border-bottom: 1px solid rgba(0,0,0,.08);
+      }
+      nav ul.open { display: flex; }
+      nav li a { display: block; padding: 14px 20px; }
+      .contact { grid-template-columns: 1fr; }
+      section { padding: 60px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header>
+    <div class="container nav">
+      <a href="#top" class="logo">แลนด์แสนรัก <span>รีสอร์ท</span></a>
+      <button class="menu-toggle" aria-label="เปิดเมนู" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+      <nav>
+        <ul id="menu">
+          <li><a href="#about">เกี่ยวกับเรา</a></li>
+          <li><a href="#amenities">สิ่งอำนวยความสะดวก</a></li>
+          <li><a href="#rooms">ห้องพัก & ราคา</a></li>
+          <li><a href="#contact">แผนที่ & ติดต่อ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="container">
+      <small>LAND SANRAK RESORT · BANG SAI</small>
+      <h1>แลนด์แสนรัก รีสอร์ท บางไทร</h1>
+      <p>พักผ่อนในบรรยากาศสงบเงียบ เป็นกันเอง เหมือนกลับมาบ้าน</p>
+      <div class="actions">
+        <a href="#rooms" class="btn btn-primary">ดูห้องพัก & ราคา</a>
+        <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
+          สอบถาม / จองห้อง
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT / จุดเด่น ================= -->
+  <section id="about">
+    <div class="container">
+      <div class="section-title">
+        <h2>ทำไมต้องแลนด์แสนรัก</h2>
+        <p>ที่พักเล็ก ๆ ที่ตั้งใจดูแลทุกคนเหมือนคนในครอบครัว</p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <div class="icon">🌿</div>
+          <h3>สงบเงียบ</h3>
+          <p>ห่างจากความวุ่นวาย นอนหลับสบาย พักผ่อนได้เต็มที่</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🤝</div>
+          <h3>เป็นกันเอง</h3>
+          <p>เจ้าของดูแลเอง ทักถามได้ตลอด บริการแบบอบอุ่น</p>
+        </div>
+        <div class="feature">
+          <div class="icon">💰</div>
+          <h3>ราคาสบายกระเป๋า</h3>
+          <p>เริ่มต้นเพียง 400 บาท มีทั้งแบบค้างคืนและพักชั่วคราว</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🚗</div>
+          <h3>เดินทางสะดวก</h3>
+          <p>อยู่ในพื้นที่บางไทร ค้นหาง่ายผ่าน Google Maps</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AMENITIES / สิ่งอำนวยความสะดวก ================= -->
+  <section id="amenities">
+    <div class="container">
+      <div class="section-title">
+        <h2>สิ่งอำนวยความสะดวก</h2>
+        <p>ทุกห้องพร้อมให้คุณพักผ่อนอย่างสบายใจ</p>
+      </div>
+      <div class="amenities">
+        <div class="amenity">
+          <div class="icon">🧼</div>
+          <h3>ห้องสะอาด</h3>
+          <p>ทำความสะอาดและเปลี่ยนผ้าปูทุกครั้งก่อนเข้าพัก</p>
+        </div>
+        <div class="amenity">
+          <div class="icon">❄️</div>
+          <h3>แอร์เย็นฉ่ำ</h3>
+          <p>เครื่องปรับอากาศทุกห้อง เย็นสบายตลอดคืน</p>
+        </div>
+        <div class="amenity">
+          <div class="icon">📶</div>
+          <h3>Free Wi-Fi</h3>
+          <p>อินเทอร์เน็ตไร้สายฟรี ใช้งานได้ทุกห้อง</p>
+        </div>
+        <div class="amenity">
+          <div class="icon">🚗</div>
+          <h3>ที่จอดรถสะดวก</h3>
+          <p>จอดรถได้ใกล้ห้องพัก เข้า-ออกง่าย</p>
+        </div>
+        <div class="amenity">
+          <div class="icon">🔒</div>
+          <h3>ปลอดภัย เป็นส่วนตัว</h3>
+          <p>บรรยากาศเงียบสงบ ไม่พลุกพล่าน มั่นใจได้</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ROOMS ================= -->
+  <section id="rooms">
+    <div class="container">
+      <div class="section-title">
+        <h2>ห้องพัก & ราคา</h2>
+        <p>เลือกแบบที่เหมาะกับคุณ แล้วกดจองผ่าน Facebook ได้เลย</p>
+      </div>
+
+      <div class="rooms">
+        <!-- ห้องแบบที่ 1 -->
+        <article class="room">
+          <div class="room-img">
+            <!-- TODO: <img src="images/room-standard.jpg" alt="ห้องสแตนดาร์ด"> -->
+            ใส่รูปห้องสแตนดาร์ด
+          </div>
+          <div class="room-body">
+            <h3>ห้องสแตนดาร์ด</h3>
+            <div class="price"><strong>650</strong> <span>บาท / คืน</span></div>
+            <ul>
+              <li>ห้องสะอาด เตียงนอนสบาย</li>
+              <li>แอร์เย็นฉ่ำ</li>
+              <li>Free Wi-Fi</li>
+              <li>ห้องน้ำในตัว</li>
+              <li>ที่จอดรถสะดวก</li>
+            </ul>
+            <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-primary">จองห้องนี้</a>
+          </div>
+        </article>
+
+        <!-- ห้องแบบที่ 2 -->
+        <article class="room">
+          <div class="room-img">
+            <span class="room-tag">แนะนำ</span>
+            <!-- TODO: <img src="images/room-deluxe.jpg" alt="ห้องดีลักซ์"> -->
+            ใส่รูปห้องดีลักซ์
+          </div>
+          <div class="room-body">
+            <h3>ห้องดีลักซ์</h3>
+            <div class="price"><strong>850</strong> <span>บาท / คืน</span></div>
+            <ul>
+              <li>ห้องกว้างขึ้น สะอาด พักสบายกว่า</li>
+              <li>แอร์เย็นฉ่ำ / ทีวี</li>
+              <li>Free Wi-Fi</li>
+              <li>ห้องน้ำในตัว เครื่องทำน้ำอุ่น</li>
+              <li>ที่จอดรถหน้าห้อง</li>
+            </ul>
+            <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-primary">จองห้องนี้</a>
+          </div>
+        </article>
+
+        <!-- แบบพักชั่วคราว -->
+        <article class="room">
+          <div class="room-img" style="background: linear-gradient(135deg, #c9a57f, #8a6644);">
+            <span class="room-tag" style="background: var(--green);">พักชั่วคราว</span>
+            <!-- TODO: <img src="images/room-short.jpg" alt="พักชั่วคราว 3 ชั่วโมง"> -->
+            ใส่รูปห้องพักชั่วคราว
+          </div>
+          <div class="room-body">
+            <h3>พักชั่วคราว 3 ชั่วโมง</h3>
+            <div class="price"><strong>300</strong> <span>บาท / 3 ชั่วโมง</span></div>
+            <ul>
+              <li>แวะพักระหว่างเดินทาง</li>
+              <li>ห้องสะอาด แอร์เย็นฉ่ำ</li>
+              <li>Free Wi-Fi</li>
+              <li>ปลอดภัย เป็นส่วนตัว</li>
+            </ul>
+            <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-primary">สอบถามห้องว่าง</a>
+          </div>
+        </article>
+      </div>
+
+      <p class="note">* ราคาและสิ่งอำนวยความสะดวกอาจเปลี่ยนแปลงได้ กรุณาสอบถามห้องว่างก่อนเข้าพัก</p>
+    </div>
+  </section>
+
+  <!-- ================= MAP / CONTACT ================= -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>แผนที่ & ติดต่อเรา</h2>
+        <p>กดเปิดแผนที่เพื่อนำทางมาที่รีสอร์ทได้ทันที</p>
+      </div>
+
+      <div class="contact">
+        <div class="contact-info">
+          <h3>แลนด์แสนรัก รีสอร์ท บางไทร</h3>
+          <div class="row">
+            <div>📍</div>
+            <div><b>ที่ตั้ง</b><span>ตำบลบ้านม้า อำเภอบางไทร จังหวัดพระนครศรีอยุธยา 13190<!-- TODO: ใส่ที่อยู่เต็ม --></span></div>
+          </div>
+          <div class="row">
+            <div>📞</div>
+            <div><b>โทรศัพท์</b><span>091-939-5659 <!-- TODO: ใส่เบอร์จริง --></span></div>
+          </div>
+          <div class="row">
+            <div>🕒</div>
+            <div><b>เช็คอิน / เช็คเอาท์</b><span>เช็คอิน 14:00 · เช็คเอาท์ 12:00 <!-- TODO: แก้เวลาตามจริง --></span></div>
+          </div>
+          <div class="btns">
+            <a href="https://maps.app.goo.gl/vMvzxxf1ffs1YwX79" target="_blank" rel="noopener" class="btn btn-primary">📍 เปิด Google Maps นำทาง</a>
+            <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-fb">
+              <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
+              ไปที่ Facebook ของเรา
+            </a>
+          </div>
+        </div>
+
+        <div class="map">
+          <!-- แผนที่ฝัง: ค้นหาจากชื่อรีสอร์ท
+               ถ้าตำแหน่งไม่ตรง ให้ไปที่ Google Maps > แชร์ > ฝังแผนที่ แล้วนำ src มาแทนที่ -->
+          <iframe
+            src="https://maps.google.com/maps?q=แลนด์แสนรัก%20รีสอร์ท%20บางไทร&z=15&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="แผนที่ แลนด์แสนรัก รีสอร์ท บางไทร"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      © <span id="year"></span> แลนด์แสนรัก รีสอร์ท บางไทร ·
+      <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener">Facebook</a> ·
+      <a href="https://maps.app.goo.gl/vMvzxxf1ffs1YwX79" target="_blank" rel="noopener">แผนที่</a>
+    </div>
+  </footer>
+
+  <!-- ปุ่ม Facebook ลอยมุมขวาล่าง -->
+  <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="float-fb" aria-label="ติดต่อทาง Facebook">
+    <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
+  </a>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // ปิดเมนูมือถือเมื่อกดลิงก์
+    document.querySelectorAll('#menu a').forEach(a =>
+      a.addEventListener('click', () => document.getElementById('menu').classList.remove('open'))
+    );
+  </script>
+</body>
+</html>
