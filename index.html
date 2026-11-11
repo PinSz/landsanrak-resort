@@ -190,8 +190,11 @@
     .modal {
       position: fixed; inset: 0; z-index: 100; background: rgba(20, 28, 24, .7);
       display: none; padding: 20px; overflow-y: auto;
+      overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
     }
-    .modal.open { display: grid; place-items: center; }
+    /* align-items:flex-start = ให้กล่องสูงตามเนื้อหา แล้วเลื่อนใน .modal ได้ (ไม่ถูกบีบเท่าจอ) */
+    .modal.open { display: flex; align-items: flex-start; }
+    .modal-box { margin: auto; }
     .modal-box {
       position: relative; background: var(--white); border-radius: var(--radius); overflow: hidden;
       width: 100%; max-width: 960px; display: grid; grid-template-columns: 1.15fr 1fr;
@@ -221,9 +224,25 @@
     .modal-info h4 { font-family: "Prompt", sans-serif; font-weight: 500; color: var(--green-dark); margin-top: 6px; }
     .modal-note { font-size: .85rem; color: var(--muted); margin-bottom: 18px; }
     .modal-actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .modal-close-bottom {
+      display: none; width: 100%; margin-top: 12px; padding: 12px; border-radius: 999px;
+      border: 1.5px solid #ccc; background: #fff; color: var(--text);
+      font-family: "Prompt", sans-serif; font-size: 1rem; cursor: pointer;
+    }
     @media (max-width: 760px) {
       .modal { padding: 0; }
-      .modal-box { grid-template-columns: 1fr; border-radius: 0; min-height: 100%; }
+      /* มือถือ: เว้นที่ด้านบน 64px ให้เห็นพื้นหลัง + เป็นที่วางปุ่มปิด, กล่องมุมบนโค้ง */
+      .modal-box {
+        grid-template-columns: 1fr; margin: 64px 0 0; min-height: calc(100% - 64px);
+        border-radius: 20px 20px 0 0; box-shadow: none;
+      }
+      .modal-close {
+        position: fixed; top: 10px; right: 14px; width: 44px; height: 44px;
+        background: rgba(255,255,255,.95); color: var(--text); font-size: 1.3rem;
+      }
+      .modal-gallery { padding-top: 14px; }
+      .modal-thumbs { justify-content: center; }
+      .modal-close-bottom { display: block; }
       .modal-main { height: 280px; }
       .modal-info .amen-list { grid-template-columns: 1fr; }
     }
@@ -706,12 +725,21 @@
         <div class="modal-actions">
           <a href="${LINE_URL}" target="_blank" rel="noopener" class="btn btn-line">${r.lineLabel || 'จองผ่าน LINE'}</a>
           <a href="${FB_URL}" target="_blank" rel="noopener" class="btn btn-fb">Facebook</a>
-        </div>`;
+        </div>
+        <button type="button" class="modal-close-bottom" data-close>✕ ปิดหน้าต่าง</button>`;
       modal.classList.add('open');
+      modal.scrollTop = 0;
       modal.setAttribute('aria-hidden', 'false');
+      // ให้ปุ่มย้อนกลับ (Back) ของมือถือปิดหน้าต่างแทนการออกจากหน้าเว็บ
+      if (!(history.state && history.state.roomModal)) history.pushState({ roomModal: true }, '');
       document.body.style.overflow = 'hidden';
     }
     function closeRoom() {
+      if (!modal.classList.contains('open')) return;
+      if (history.state && history.state.roomModal) { history.back(); return; } // popstate จะปิดให้
+      hideModal();
+    }
+    function hideModal() {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
@@ -721,7 +749,10 @@
       if (t) openRoom(t.dataset.open);
     });
     document.getElementById('modalClose').addEventListener('click', closeRoom);
-    modal.addEventListener('click', e => { if (e.target === modal) closeRoom(); });
+    modal.addEventListener('click', e => {
+      if (e.target === modal || e.target.closest('[data-close]')) closeRoom();
+    });
+    window.addEventListener('popstate', () => { if (modal.classList.contains('open')) hideModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRoom(); });
   </script>
 </body>
