@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>แลนด์แสนรัก รีสอร์ท บางไทร | ที่พักสงบเงียบ เป็นกันเอง</title>
-  <meta name="description" content="แลนด์แสนรัก รีสอร์ท บางไทร ที่พักบรรยากาศสงบเงียบ เป็นกันเอง ห้องพักเริ่มต้น 650 บาท/คืน และแบบพักชั่วคราว 3 ชั่วโมง 400 บาท" />
+  <meta name="description" content="แลนด์แสนรัก รีสอร์ท บางไทร ที่พักบรรยากาศสงบเงียบ เป็นกันเอง ห้องพัก 7 แบบ ราคา 650–1,400 บาท/คืน และแบบพักชั่วคราว 3 ชั่วโมง 300 บาท จองผ่าน LINE @0919394245" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -146,6 +146,118 @@
     .room-body .btn { margin-top: auto; width: 100%; }
     .note { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 28px; }
 
+    /* ===== ปุ่ม LINE / ปุ่มรอง ===== */
+    :root { --line: #06c755; }
+    .btn-line { background: var(--line); color: var(--white); }
+    .btn-line:hover { filter: brightness(.92); }
+    .btn-ghost { background: transparent; border-color: var(--green); color: var(--green); }
+    .btn-ghost:hover { background: var(--green); color: var(--white); }
+    .line-mark { font-weight: 700; letter-spacing: .5px; }
+
+    /* ===== ตัวกรองห้อง ===== */
+    .filters { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 32px; }
+    .filters button {
+      font-family: "Prompt", sans-serif; font-size: .95rem; cursor: pointer;
+      border: 1.5px solid var(--green); background: var(--white); color: var(--green);
+      padding: 7px 18px; border-radius: 999px; transition: all .2s ease;
+    }
+    .filters button.active, .filters button:hover { background: var(--green); color: var(--white); }
+
+    /* ===== การ์ดห้อง (ส่วนเพิ่ม) ===== */
+    .room-sub { color: var(--muted); font-size: .92rem; margin-top: -2px; }
+    .room .price { margin: 8px 0 8px; }
+    .guests {
+      display: inline-block; align-self: flex-start; font-size: .88rem; color: var(--green-dark);
+      background: var(--green-light); padding: 2px 12px; border-radius: 999px; margin-bottom: 14px;
+    }
+    .room-img { overflow: hidden; }
+    .room-img img { position: absolute; inset: 0; cursor: pointer; }
+    .room-actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .room-actions.single { grid-template-columns: 1fr; }
+    .room-body .room-actions .btn { margin-top: 0; padding: 10px 12px; font-size: .92rem; }
+    .room[hidden] { display: none; }
+
+    /* ===== ข้อควรทราบ ===== */
+    .rules {
+      margin-top: 40px; background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 28px 32px;
+    }
+    .rules h3 { color: var(--green-dark); font-weight: 500; margin-bottom: 12px; }
+    .rules ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 6px 28px; color: var(--muted); font-size: .95rem; }
+    .rules li::before { content: "• "; color: var(--wood); font-weight: bold; }
+
+    /* ===== Modal รายละเอียดห้อง ===== */
+    .modal {
+      position: fixed; inset: 0; z-index: 100; background: rgba(20, 28, 24, .7);
+      display: none; padding: 20px; overflow-y: auto;
+    }
+    .modal.open { display: grid; place-items: center; }
+    .modal-box {
+      position: relative; background: var(--white); border-radius: var(--radius); overflow: hidden;
+      width: 100%; max-width: 960px; display: grid; grid-template-columns: 1.15fr 1fr;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    .modal-close {
+      position: absolute; top: 12px; right: 12px; z-index: 2; width: 38px; height: 38px;
+      border-radius: 50%; border: 0; background: rgba(255,255,255,.95); font-size: 1.3rem;
+      cursor: pointer; box-shadow: var(--shadow);
+    }
+    .modal-gallery { background: #1d221f; display: flex; flex-direction: column; }
+    .modal-main { width: 100%; height: 420px; object-fit: contain; background: #1d221f; }
+    .modal-thumbs { display: flex; gap: 8px; padding: 10px; flex-wrap: wrap; }
+    .modal-thumbs button {
+      border: 2px solid transparent; border-radius: 8px; padding: 0; overflow: hidden;
+      background: none; cursor: pointer; opacity: .55; transition: opacity .2s;
+    }
+    .modal-thumbs button.active { opacity: 1; border-color: var(--white); }
+    .modal-thumbs img { width: 72px; height: 54px; object-fit: cover; }
+    .modal-info { padding: 28px; display: flex; flex-direction: column; }
+    .modal-info h3 { font-size: 1.5rem; color: var(--green-dark); font-weight: 600; line-height: 1.3; }
+    .modal-info .amen-list {
+      list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px;
+      font-size: .93rem; color: var(--text); margin: 6px 0 14px;
+    }
+    .modal-info .amen-list li::before { content: "✓ "; color: var(--green); font-weight: bold; }
+    .modal-info h4 { font-family: "Prompt", sans-serif; font-weight: 500; color: var(--green-dark); margin-top: 6px; }
+    .modal-note { font-size: .85rem; color: var(--muted); margin-bottom: 18px; }
+    .modal-actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 760px) {
+      .modal { padding: 0; }
+      .modal-box { grid-template-columns: 1fr; border-radius: 0; min-height: 100%; }
+      .modal-main { height: 280px; }
+      .modal-info .amen-list { grid-template-columns: 1fr; }
+    }
+
+    /* ===== ปุ่มลอย LINE ===== */
+    .float-line {
+      position: fixed; right: 20px; bottom: 90px; z-index: 60;
+      width: 58px; height: 58px; border-radius: 50%; background: var(--line); color: #fff;
+      display: grid; place-items: center; font-family: "Prompt", sans-serif; font-weight: 700; font-size: .85rem;
+      box-shadow: 0 6px 18px rgba(6,199,85,.4); transition: transform .2s ease;
+    }
+    .float-line:hover { transform: scale(1.08); }
+
+    /* ===== แบนเนอร์โปรโมชั่น ===== */
+    .promo { padding: 48px 0 0; }
+    .promo a { display: block; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform .2s ease; }
+    .promo a:hover { transform: translateY(-3px); }
+    .promo img { width: 100%; height: auto; }
+
+    /* ===== Self Check-in ===== */
+    .selfcheck {
+      margin-top: 32px; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 28px 32px; display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center;
+    }
+    .selfcheck img { width: 170px; height: 170px; border-radius: 10px; border: 1px solid #eee; }
+    .selfcheck h3 { color: var(--green-dark); font-weight: 600; font-size: 1.35rem; }
+    .selfcheck p { color: var(--muted); margin: 4px 0 16px; }
+    .selfcheck .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+    @media (max-width: 600px) {
+      .selfcheck { grid-template-columns: 1fr; text-align: center; padding: 24px; }
+      .selfcheck img { margin: 0 auto; }
+      .selfcheck .btns { justify-content: center; }
+    }
+
     /* ===== แผนที่ / ติดต่อ ===== */
     .contact { display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px; align-items: stretch; }
     .contact-info {
@@ -217,11 +329,22 @@
       <p>พักผ่อนในบรรยากาศสงบเงียบ เป็นกันเอง เหมือนกลับมาบ้าน</p>
       <div class="actions">
         <a href="#rooms" class="btn btn-primary">ดูห้องพัก & ราคา</a>
+        <a href="https://lin.ee/Xdhas5A" target="_blank" rel="noopener" class="btn btn-line"><span class="line-mark">LINE</span> จองผ่าน LINE</a>
         <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-outline">
           <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
           สอบถาม / จองห้อง
         </a>
       </div>
+    </div>
+  </section>
+
+  <!-- ================= PROMO BANNER ================= -->
+  <section class="promo" aria-label="โปรโมชั่นพักชั่วคราว">
+    <div class="container">
+      <a href="https://lin.ee/Xdhas5A" target="_blank" rel="noopener" aria-label="ติดต่อทาง LINE">
+        <img src="images/116faf5c-0b53-4b83-b6ee-201ae9863543.jpg"
+             alt="แลนด์แสนรัก รีสอร์ท ห้องพักรายชั่วโมง เริ่มต้น 300 บาท 3 ชั่วโมง ใกล้ตลาดไม้ตรา โทร 091-9395659" loading="lazy" />
+      </a>
     </div>
   </section>
 
@@ -246,12 +369,12 @@
         <div class="feature">
           <div class="icon">💰</div>
           <h3>ราคาสบายกระเป๋า</h3>
-          <p>เริ่มต้นเพียง 400 บาท มีทั้งแบบค้างคืนและพักชั่วคราว</p>
+          <p>ห้องพักหลายแบบ เริ่มต้น 650 บาท/คืน และพักชั่วคราว 3 ชม. เพียง 300 บาท</p>
         </div>
         <div class="feature">
           <div class="icon">🚗</div>
           <h3>เดินทางสะดวก</h3>
-          <p>อยู่ในพื้นที่บางไทร ค้นหาง่ายผ่าน Google Maps</p>
+          <p>ใกล้ตลาดไม้ตรา อ.บางไทร ค้นหาง่ายผ่าน Google Maps</p>
         </div>
       </div>
     </div>
@@ -295,79 +418,52 @@
   </section>
 
   <!-- ================= ROOMS ================= -->
+  <!-- ข้อมูลห้องทั้งหมดแก้ได้ที่ตัวแปร ROOMS ในสคริปต์ท้ายไฟล์ -->
   <section id="rooms">
     <div class="container">
       <div class="section-title">
         <h2>ห้องพัก & ราคา</h2>
-        <p>เลือกแบบที่เหมาะกับคุณ แล้วกดจองผ่าน Facebook ได้เลย</p>
+        <p>เลือกแบบที่เหมาะกับคุณ กดดูรายละเอียด แล้วจองผ่าน LINE ได้เลย</p>
       </div>
 
-      <div class="rooms">
-        <!-- ห้องแบบที่ 1 -->
-        <article class="room">
-          <div class="room-img">
-            <!-- TODO: <img src="images/room-standard.jpg" alt="ห้องสแตนดาร์ด"> -->
-            ใส่รูปห้องสแตนดาร์ด
-          </div>
-          <div class="room-body">
-            <h3>ห้องสแตนดาร์ด</h3>
-            <div class="price"><strong>650</strong> <span>บาท / คืน</span></div>
-            <ul>
-              <li>ห้องสะอาด เตียงนอนสบาย</li>
-              <li>แอร์เย็นฉ่ำ</li>
-              <li>Free Wi-Fi</li>
-              <li>ห้องน้ำในตัว</li>
-              <li>ที่จอดรถสะดวก</li>
-            </ul>
-            <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-primary">จองห้องนี้</a>
-          </div>
-        </article>
+      <div class="filters" id="roomFilters">
+        <button class="active" data-filter="all">ทั้งหมด</button>
+        <button data-filter="cottage">Cottage</button>
+        <button data-filter="studio">Studio</button>
+        <button data-filter="rooftop">Rooftop</button>
+        <button data-filter="short">พักชั่วคราว</button>
+      </div>
 
-        <!-- ห้องแบบที่ 2 -->
-        <article class="room">
-          <div class="room-img">
-            <span class="room-tag">แนะนำ</span>
-            <!-- TODO: <img src="images/room-deluxe.jpg" alt="ห้องดีลักซ์"> -->
-            ใส่รูปห้องดีลักซ์
-          </div>
-          <div class="room-body">
-            <h3>ห้องดีลักซ์</h3>
-            <div class="price"><strong>850</strong> <span>บาท / คืน</span></div>
-            <ul>
-              <li>ห้องกว้างขึ้น สะอาด พักสบายกว่า</li>
-              <li>แอร์เย็นฉ่ำ / ทีวี</li>
-              <li>Free Wi-Fi</li>
-              <li>ห้องน้ำในตัว เครื่องทำน้ำอุ่น</li>
-              <li>ที่จอดรถหน้าห้อง</li>
-            </ul>
-            <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-primary">จองห้องนี้</a>
-          </div>
-        </article>
+      <div class="rooms" id="roomGrid"></div>
 
-        <!-- แบบพักชั่วคราว -->
-        <article class="room">
-          <div class="room-img" style="background: linear-gradient(135deg, #c9a57f, #8a6644);">
-            <span class="room-tag" style="background: var(--green);">พักชั่วคราว</span>
-            <!-- TODO: <img src="images/room-short.jpg" alt="พักชั่วคราว 3 ชั่วโมง"> -->
-            ใส่รูปห้องพักชั่วคราว
-          </div>
-          <div class="room-body">
-            <h3>พักชั่วคราว 3 ชั่วโมง</h3>
-            <div class="price"><strong>300</strong> <span>บาท / 3 ชั่วโมง</span></div>
-            <ul>
-              <li>แวะพักระหว่างเดินทาง</li>
-              <li>ห้องสะอาด แอร์เย็นฉ่ำ</li>
-              <li>Free Wi-Fi</li>
-              <li>ปลอดภัย เป็นส่วนตัว</li>
-            </ul>
-            <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-primary">สอบถามห้องว่าง</a>
-          </div>
-        </article>
+      <div class="rules">
+        <h3>ข้อควรทราบก่อนเข้าพัก</h3>
+        <ul>
+          <li>เด็กอายุต่ำกว่า 6 ขวบ เข้าพักฟรีกับผู้ปกครอง</li>
+          <li>ไม่มีบริการเตียงเสริม</li>
+          <li>เพิ่มผู้เข้าพักมีค่าใช้จ่ายเพิ่มเติม</li>
+          <li>ห้องพักทุกห้องเป็นห้องปลอดบุหรี่</li>
+          <li>ห้ามนำสัตว์เลี้ยงเข้าพักทุกกรณี</li>
+          <li>ห้ามประกอบอาหารในห้องพักโดยเด็ดขาด</li>
+          <li>ประตูห้องล็อคอัตโนมัติเมื่อปิด กรุณานำคีย์การ์ดออกจากห้องทุกครั้ง</li>
+        </ul>
       </div>
 
       <p class="note">* ราคาและสิ่งอำนวยความสะดวกอาจเปลี่ยนแปลงได้ กรุณาสอบถามห้องว่างก่อนเข้าพัก</p>
     </div>
   </section>
+
+  <!-- Modal รายละเอียดห้อง -->
+  <div class="modal" id="roomModal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="ปิด">✕</button>
+      <div class="modal-gallery">
+        <img class="modal-main" id="modalMain" src="" alt="" />
+        <div class="modal-thumbs" id="modalThumbs"></div>
+      </div>
+      <div class="modal-info" id="modalInfo"></div>
+    </div>
+  </div>
 
   <!-- ================= MAP / CONTACT ================= -->
   <section id="contact">
@@ -382,17 +478,22 @@
           <h3>แลนด์แสนรัก รีสอร์ท บางไทร</h3>
           <div class="row">
             <div>📍</div>
-            <div><b>ที่ตั้ง</b><span>ตำบลบ้านม้า อำเภอบางไทร จังหวัดพระนครศรีอยุธยา 13190<!-- TODO: ใส่ที่อยู่เต็ม --></span></div>
+            <div><b>ที่ตั้ง</b><span>ตำบลบ้านม้า อำเภอบางไทร จังหวัดพระนครศรีอยุธยา 13190 (ใกล้ตลาดไม้ตรา)<!-- TODO: ใส่ที่อยู่เต็ม --></span></div>
           </div>
           <div class="row">
             <div>📞</div>
-            <div><b>โทรศัพท์</b><span>091-939-5659 <!-- TODO: ใส่เบอร์จริง --></span></div>
+            <div><b>โทรศัพท์</b><span><a href="tel:0919395659">091-939-5659</a></span></div>
+          </div>
+          <div class="row">
+            <div>💬</div>
+            <div><b>LINE</b><span><a href="https://lin.ee/Xdhas5A" target="_blank" rel="noopener">@0919394245</a></span></div>
           </div>
           <div class="row">
             <div>🕒</div>
             <div><b>เช็คอิน / เช็คเอาท์</b><span>เช็คอิน 14:00 · เช็คเอาท์ 12:00 <!-- TODO: แก้เวลาตามจริง --></span></div>
           </div>
           <div class="btns">
+            <a href="https://lin.ee/Xdhas5A" target="_blank" rel="noopener" class="btn btn-line"><span class="line-mark">LINE</span> แอดไลน์ / จองห้อง</a>
             <a href="https://maps.app.goo.gl/vMvzxxf1ffs1YwX79" target="_blank" rel="noopener" class="btn btn-primary">📍 เปิด Google Maps นำทาง</a>
             <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="btn btn-fb">
               <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
@@ -412,6 +513,19 @@
             allowfullscreen></iframe>
         </div>
       </div>
+
+      <!-- Self Check-in -->
+      <div class="selfcheck">
+        <img src="images/line-qr.png" alt="QR Code LINE แลนด์แสนรัก รีสอร์ท" />
+        <div>
+          <h3>Self Check-in Service</h3>
+          <p>ต้องการเข้าพักหลัง 3 ทุ่ม สแกน QR Code หรือกดปุ่มด้านล่างเพื่อเพิ่มเพื่อนทาง LINE<br>สอบถามเพิ่มเติม โทร 091-939-5659</p>
+          <div class="btns">
+            <a href="https://lin.ee/Xdhas5A" target="_blank" rel="noopener" class="btn btn-line"><span class="line-mark">LINE</span> เพิ่มเพื่อน</a>
+            <a href="tel:0919395659" class="btn btn-ghost">📞 โทร 091-939-5659</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -419,10 +533,14 @@
   <footer>
     <div class="container">
       © <span id="year"></span> แลนด์แสนรัก รีสอร์ท บางไทร ·
+      <a href="https://lin.ee/Xdhas5A" target="_blank" rel="noopener">LINE @0919394245</a> ·
       <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener">Facebook</a> ·
       <a href="https://maps.app.goo.gl/vMvzxxf1ffs1YwX79" target="_blank" rel="noopener">แผนที่</a>
     </div>
   </footer>
+
+  <!-- ปุ่ม LINE ลอย -->
+  <a href="https://lin.ee/Xdhas5A" target="_blank" rel="noopener" class="float-line" aria-label="ติดต่อทาง LINE">LINE</a>
 
   <!-- ปุ่ม Facebook ลอยมุมขวาล่าง -->
   <a href="https://www.facebook.com/landsanrakresort" target="_blank" rel="noopener" class="float-fb" aria-label="ติดต่อทาง Facebook">
@@ -435,6 +553,176 @@
     document.querySelectorAll('#menu a').forEach(a =>
       a.addEventListener('click', () => document.getElementById('menu').classList.remove('open'))
     );
+
+    /* ================= ข้อมูลห้องพัก (แก้ราคา/รายละเอียดที่นี่) ================= */
+    const LINE_URL = 'https://lin.ee/Xdhas5A';
+    const FB_URL = 'https://www.facebook.com/landsanrakresort';
+
+    const ROOMS = [
+      {
+        id: 'short', group: 'short', name: 'พักชั่วคราว 3 ชั่วโมง', th: 'ห้องพักรายชั่วโมง',
+        price: 300, unit: '3 ชั่วโมง', guests: null, lineLabel: 'สอบถามทาง LINE',
+        img: 'images/rooms/short-stay.jpg',
+        brochure: 'images/116faf5c-0b53-4b83-b6ee-201ae9863543.jpg', brochureLabel: 'โปรโมชั่น',
+        highlights: ['เข้าพักได้เลย ไม่ต้องจอง', 'สะอาด เป็นส่วนตัว', 'มีแอร์ ทีวี ตู้เย็น', 'ห้องน้ำในตัว · ที่จอดรถสะดวก'],
+        amenities: ['เข้าพักได้เลย ไม่ต้องจอง', 'สะอาด เป็นส่วนตัว', 'เครื่องปรับอากาศ', 'ทีวี', 'ตู้เย็น',
+                    'ห้องน้ำในตัว', 'ที่จอดรถสะดวก', 'Free Wi-Fi']
+      },
+      {
+        id: 'cottage-king', group: 'cottage', name: 'Cottage King', th: 'ห้องพักขนาดเล็ก เตียงเดี่ยว',
+        price: 650, unit: 'คืน', guests: 2,
+        img: 'images/rooms/cottage-king.jpg', ext: 'images/rooms/cottage-king-ext.jpg',
+        brochure: 'images/59ebf106-55e2-45a2-83e8-f8fb76ef5bfe.jpg',
+        highlights: ['เตียง 6 ฟุต', 'แอร์ · ทีวีจอแบน · ตู้เย็น', 'เครื่องทำน้ำอุ่น', 'ฟรี กาแฟ & Wi-Fi'],
+        amenities: ['เตียง 6 ฟุต', 'เครื่องปรับอากาศ', 'ทีวีจอแบน', 'ตู้เย็น', 'เครื่องทำน้ำอุ่น', 'ที่แขวนเสื้อผ้า',
+                    'ห้องน้ำไม่แยกโซนเปียก-แห้ง', 'ฟรี กาแฟในห้อง', 'ฟรี Wi-Fi']
+      },
+      {
+        id: 'cottage-twin', group: 'cottage', name: 'Cottage Twin', th: 'ห้องพักขนาดเล็ก เตียงคู่',
+        price: 750, unit: 'คืน', guests: 2,
+        img: 'images/rooms/cottage-twin.jpg', ext: 'images/rooms/cottage-twin-ext.jpg',
+        brochure: 'images/5c577984-6792-416d-9b31-16834cdc1491.jpg',
+        highlights: ['ที่นอน 3.5 ฟุต 2 หลัง', 'แอร์ · ทีวีจอแบน · ตู้เย็น', 'เครื่องทำน้ำอุ่น', 'ฟรี กาแฟ & Wi-Fi'],
+        amenities: ['ที่นอน 3.5 ฟุต 2 หลัง', 'เครื่องปรับอากาศ', 'ทีวีจอแบน', 'ตู้เย็น', 'เครื่องทำน้ำอุ่น', 'ที่แขวนเสื้อผ้า',
+                    'ห้องน้ำไม่แยกโซนเปียก-แห้ง', 'ฟรี กาแฟในห้อง', 'ฟรี Wi-Fi']
+      },
+      {
+        id: 'deluxe-cottage', group: 'cottage', name: 'Deluxe Cottage', th: 'ห้องพักขนาดกลาง',
+        price: 750, unit: 'คืน', guests: 2,
+        img: 'images/rooms/deluxe-cottage.jpg', ext: 'images/rooms/deluxe-cottage-ext.jpg',
+        brochure: 'images/e031b2d5-5e3e-4bff-aed7-c7447cd97d27.jpg',
+        highlights: ['เตียง 6 ฟุต', 'ห้องกว้างขึ้น', 'แอร์ · ทีวีจอแบน · ตู้เย็น', 'ฟรี กาแฟ & Wi-Fi'],
+        amenities: ['เตียง 6 ฟุต', 'เครื่องปรับอากาศ', 'ทีวีจอแบน', 'ตู้เย็น', 'เครื่องทำน้ำอุ่น', 'ที่แขวนเสื้อผ้า',
+                    'ห้องน้ำไม่แยกโซนเปียก-แห้ง', 'ฟรี กาแฟในห้อง', 'ฟรี Wi-Fi']
+      },
+      {
+        id: 'studio-king', group: 'studio', name: 'Studio King', th: 'ห้องพักขนาดมาตรฐาน',
+        price: 950, unit: 'คืน', guests: 2,
+        img: 'images/rooms/studio-king.jpg', ext: 'images/rooms/studio-king-ext.jpg',
+        brochure: 'images/35156950-9309-4ae7-a0df-9f27ff3c89de.jpg',
+        highlights: ['เตียง 6 ฟุต', 'ห้องน้ำแยกโซนเปียก-แห้ง', 'ตู้เสื้อผ้า · โต๊ะเครื่องแป้ง', 'ฟรี ชา กาแฟ & Wi-Fi'],
+        amenities: ['เตียง 6 ฟุต', 'เครื่องปรับอากาศ', 'ทีวีจอแบน', 'ตู้เย็น', 'เครื่องทำน้ำอุ่น', 'ตู้เสื้อผ้า',
+                    'โต๊ะเครื่องแป้ง', 'ห้องน้ำแยกโซนเปียก-แห้ง', 'ฟรี ชา กาแฟในห้อง', 'ฟรี Wi-Fi']
+      },
+      {
+        id: 'studio-family', group: 'studio', name: 'Studio Family', th: 'ห้องพักแบบครอบครัว',
+        price: 1100, unit: 'คืน', guests: 3,
+        img: 'images/rooms/studio-family.jpg', ext: 'images/rooms/studio-family-ext.jpg',
+        brochure: 'images/e768a81d-7278-40c2-bc0c-fc103bf3f577.jpg',
+        highlights: ['เตียง 6 ฟุต + เตียง 3.5 ฟุต', 'ห้องน้ำแยกโซนเปียก-แห้ง', 'ตู้เสื้อผ้า · โต๊ะเครื่องแป้ง', 'ฟรี ชา กาแฟ & Wi-Fi'],
+        amenities: ['เตียง 6 ฟุต และเตียง 3.5 ฟุต', 'เครื่องปรับอากาศ', 'ทีวีจอแบน', 'ตู้เย็น', 'เครื่องทำน้ำอุ่น', 'ตู้เสื้อผ้า',
+                    'โต๊ะเครื่องแป้ง', 'ห้องน้ำแยกโซนเปียก-แห้ง', 'ฟรี ชา กาแฟในห้อง', 'ฟรี Wi-Fi']
+      },
+      {
+        id: 'studio-rooftop', group: 'rooftop', name: 'Studio Rooftop', th: 'ห้องพักขนาดใหญ่ 2 ชั้น',
+        price: 1250, unit: 'คืน', guests: 2,
+        img: 'images/rooms/studio-rooftop.jpg', ext: 'images/rooms/studio-rooftop-ext.jpg',
+        brochure: 'images/11bc3f3d-3212-4102-818a-68956e327c3b.jpg',
+        highlights: ['ห้อง 2 ชั้น พร้อมดาดฟ้า', 'เตียง 6 ฟุต', 'ห้องน้ำแยกโซนเปียก-แห้ง', 'ฟรี Snack Basket'],
+        amenities: ['เตียง 6 ฟุต', 'เครื่องปรับอากาศ', 'ทีวีจอแบน', 'ตู้เย็น', 'เครื่องทำน้ำอุ่น', 'ตู้เสื้อผ้า',
+                    'โต๊ะเครื่องแป้ง', 'ห้องน้ำแยกโซนเปียก-แห้ง', 'ฟรี ชา กาแฟในห้อง', 'ฟรี Snack Basket ในห้อง', 'ฟรี Wi-Fi']
+      },
+      {
+        id: 'deluxe-rooftop', group: 'rooftop', name: 'Deluxe Rooftop', th: 'ห้องพัก Deluxe Rooftop',
+        price: 1400, unit: 'คืน', guests: 2,
+        img: 'images/rooms/deluxe-rooftop.jpg', ext: 'images/rooms/deluxe-rooftop-ext.jpg',
+        brochure: 'images/a5897c04-87df-4537-9b90-2da2cba8272b.jpg',
+        highlights: ['เรนชาวเวอร์ · ไดร์เป่าผม', 'โต๊ะทำงาน', 'ห้องน้ำแยกโซนเปียก-แห้ง', 'ฟรี Snack Basket'],
+        amenities: ['เตียง 6 ฟุต', 'เครื่องปรับอากาศ', 'ทีวีจอแบน', 'ตู้เย็น', 'เครื่องทำน้ำอุ่น', 'เรนชาวเวอร์',
+                    'ไดร์เป่าผม', 'ตู้เสื้อผ้า', 'โต๊ะทำงาน', 'ห้องน้ำแยกโซนเปียก-แห้ง', 'ฟรี ชา กาแฟในห้อง',
+                    'ฟรี Snack Basket ในห้อง', 'ฟรี Wi-Fi'],
+        note: 'เพิ่มผู้เข้าพักได้สูงสุด 1 ท่าน (มีค่าใช้จ่ายเพิ่มเติม)'
+      }
+    ];
+
+    /* ================= แสดงการ์ดห้อง ================= */
+    const fmt = n => n.toLocaleString('th-TH');
+    const grid = document.getElementById('roomGrid');
+
+    grid.innerHTML = ROOMS.map(r => `
+      <article class="room" data-group="${r.group}">
+        <div class="room-img" ${r.img ? '' : 'style="background: linear-gradient(135deg, #c9a57f, #8a6644);"'}>
+          ${r.img
+            ? `<img src="${r.img}" alt="${r.name} - ${r.th}" loading="lazy" data-open="${r.id}">`
+            : 'พักชั่วคราว 3 ชั่วโมง'}
+          <span class="room-tag" ${r.img ? '' : 'style="background: var(--green);"'}>${r.th}</span>
+        </div>
+        <div class="room-body">
+          <h3>${r.name}</h3>
+          <div class="price"><strong>${fmt(r.price)}</strong> <span>บาท / ${r.unit}</span></div>
+          ${r.guests ? `<span class="guests">👤 เข้าพักสูงสุด ${r.guests} ท่าน</span>` : ''}
+          <ul>${r.highlights.map(h => `<li>${h}</li>`).join('')}</ul>
+          <div class="room-actions ${r.amenities ? '' : 'single'}">
+            ${r.amenities ? `<button class="btn btn-ghost" data-open="${r.id}">ดูรายละเอียด</button>` : ''}
+            <a href="${LINE_URL}" target="_blank" rel="noopener" class="btn btn-line">${r.lineLabel || 'จองผ่าน LINE'}</a>
+          </div>
+        </div>
+      </article>`).join('');
+
+    /* ================= ตัวกรอง ================= */
+    document.querySelectorAll('#roomFilters button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#roomFilters button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        grid.querySelectorAll('.room').forEach(card => {
+          card.hidden = !(f === 'all' || card.dataset.group === f);
+        });
+      });
+    });
+
+    /* ================= Modal รายละเอียด ================= */
+    const modal = document.getElementById('roomModal');
+    const mainImg = document.getElementById('modalMain');
+    const thumbs = document.getElementById('modalThumbs');
+    const info = document.getElementById('modalInfo');
+
+    function openRoom(id) {
+      const r = ROOMS.find(x => x.id === id);
+      if (!r || !r.amenities) return;
+      const pics = [
+        r.img && { src: r.img, label: 'ภายในห้อง' },
+        r.ext && { src: r.ext, label: 'ภายนอก' },
+        r.brochure && { src: r.brochure, label: r.brochureLabel || 'โบรชัวร์' }
+      ].filter(Boolean);
+      const show = i => {
+        mainImg.src = pics[i].src;
+        mainImg.alt = `${r.name} - ${pics[i].label}`;
+        thumbs.querySelectorAll('button').forEach((b, j) => b.classList.toggle('active', i === j));
+      };
+      thumbs.innerHTML = pics.map((p, i) =>
+        `<button type="button" aria-label="${p.label}"><img src="${p.src}" alt="${p.label}"></button>`).join('');
+      thumbs.querySelectorAll('button').forEach((b, i) => b.addEventListener('click', () => show(i)));
+      show(0);
+
+      info.innerHTML = `
+        <span class="room-sub">${r.th}</span>
+        <h3 id="modalTitle">${r.name}</h3>
+        <div class="price"><strong>${fmt(r.price)}</strong> <span>บาท / ${r.unit}</span></div>
+        ${r.guests ? `<span class="guests">👤 เข้าพักสูงสุด ${r.guests} ท่าน</span>` : ''}
+        <h4>สิ่งอำนวยความสะดวกในห้อง</h4>
+        <ul class="amen-list">${r.amenities.map(a => `<li>${a}</li>`).join('')}</ul>
+        <p class="modal-note">${r.note ? r.note + '<br>' : ''}เด็กต่ำกว่า 6 ขวบพักฟรี · ไม่มีเตียงเสริม · ห้องปลอดบุหรี่ · ห้ามนำสัตว์เลี้ยง</p>
+        <div class="modal-actions">
+          <a href="${LINE_URL}" target="_blank" rel="noopener" class="btn btn-line">${r.lineLabel || 'จองผ่าน LINE'}</a>
+          <a href="${FB_URL}" target="_blank" rel="noopener" class="btn btn-fb">Facebook</a>
+        </div>`;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeRoom() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    grid.addEventListener('click', e => {
+      const t = e.target.closest('[data-open]');
+      if (t) openRoom(t.dataset.open);
+    });
+    document.getElementById('modalClose').addEventListener('click', closeRoom);
+    modal.addEventListener('click', e => { if (e.target === modal) closeRoom(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRoom(); });
   </script>
 </body>
 </html>
